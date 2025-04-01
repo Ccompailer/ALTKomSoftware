@@ -1,0 +1,6 @@
+@PricingService_HostAddress = http://localhost:5231
+
+GET {{PricingService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
