@@ -1,4 +1,6 @@
-﻿namespace ProductService.Api.Commands.DTOs;
+﻿using ProductService.Abstractions.Queries.DTOs;
+
+namespace ProductService.Api.Commands.DTOs;
 
 public record ProductDraftDto(
     string Code,
@@ -6,4 +8,6 @@ public record ProductDraftDto(
     string Image,
     string Description,
     int MaxNumberOfInsured,
-    string Icon);
+    string Icon,
+    IList<CoverDto> Covers,
+    IList<AbstractQuestionDto> Questions);
