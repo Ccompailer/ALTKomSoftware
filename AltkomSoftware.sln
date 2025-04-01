@@ -43,6 +43,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductService.Abstractions", "ProductService.Abstractions\ProductService.Abstractions.csproj", "{0F37713E-D845-4B58-BA29-317DB4847B6A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,10 @@ Global
 		{14399D99-BB60-477F-B12F-39C4A3578242}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14399D99-BB60-477F-B12F-39C4A3578242}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14399D99-BB60-477F-B12F-39C4A3578242}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F37713E-D845-4B58-BA29-317DB4847B6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F37713E-D845-4B58-BA29-317DB4847B6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F37713E-D845-4B58-BA29-317DB4847B6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F37713E-D845-4B58-BA29-317DB4847B6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{262165C7-DF4B-4C5B-95A8-92BD5ACC5776} = {89D5B0B0-227B-4840-AE90-FD1001B1CC7A}
@@ -121,5 +127,6 @@ Global
 		{15CFD62C-462F-4F4F-9EA5-D2D267AA91E3} = {70AA5687-E3A7-40F9-B8D7-9313A892BCD8}
 		{C9F6E4E1-F509-4EF5-BA47-3C6F702149AA} = {70AA5687-E3A7-40F9-B8D7-9313A892BCD8}
 		{14399D99-BB60-477F-B12F-39C4A3578242} = {70AA5687-E3A7-40F9-B8D7-9313A892BCD8}
+		{0F37713E-D845-4B58-BA29-317DB4847B6A} = {70AA5687-E3A7-40F9-B8D7-9313A892BCD8}
 	EndGlobalSection
 EndGlobal
