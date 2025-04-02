@@ -7,11 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ProductService.Abstractions\ProductService.Abstractions.csproj" />
+      <PackageReference Include="MediatR" Version="12.4.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="MediatR" Version="12.4.1" />
+      <Folder Include="Abstractions\" />
     </ItemGroup>
 
 </Project>
