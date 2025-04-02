@@ -1,5 +1,7 @@
 using Serilog;
 using Serilog.Events;
+using Steeltoe.Discovery.Client;
+using Steeltoe.Discovery.Eureka;
 
 namespace PricingService;
 
@@ -33,6 +35,7 @@ public class Program
     {
         return Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
-            .UseSerilog();
+            .UseSerilog()
+            .AddServiceDiscovery(builder => builder.UseEureka());
     }
 }
