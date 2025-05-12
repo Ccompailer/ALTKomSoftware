@@ -1,4 +1,5 @@
-﻿using Steeltoe.Discovery.Client;
+﻿using PricingService.Extensions.Startup;
+using Steeltoe.Discovery.Client;
 
 namespace PricingService;
 
@@ -13,12 +14,11 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        // register Eureka client
         services.AddDiscoveryClient(Configuration);
-        services.AddAuthorization();
         
-        // Swagger/OpenAPI
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        services.AddAuthorization();
+        services.AddSwaggerDocs();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -34,5 +34,4 @@ public class Startup
         app.UseAuthorization();
         
     }
-    
 }

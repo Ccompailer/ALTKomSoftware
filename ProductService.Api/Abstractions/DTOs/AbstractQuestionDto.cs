@@ -1,4 +1,4 @@
-﻿namespace ProductService.Abstractions.Queries.DTOs;
+﻿namespace ProductService.Api.Abstractions.DTOs;
 
 public abstract record AbstractQuestionDto(
     string QuestionCode,
