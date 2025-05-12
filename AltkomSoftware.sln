@@ -41,6 +41,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{3B484E48-1714-4B6E-94E6-03242FFCCF1A}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductService.Abstractions", "ProductService.Abstractions\ProductService.Abstractions.csproj", "{0F37713E-D845-4B58-BA29-317DB4847B6A}"
