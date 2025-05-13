@@ -1,3 +1,6 @@
+using Serilog;
+using Serilog.Events;
+
 namespace ProductService;
 
 /// <summary>
@@ -11,23 +14,32 @@ public class Program
     /// <param name="args">Аргументы командной строки</param>
     public static void Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            .Enrich.FromLogContext()
+            .WriteTo.Console()
+            .CreateLogger();
 
-        builder.Services.AddAuthorization();
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-
-        var app = builder.Build();
-
-        if (app.Environment.IsDevelopment())
+        try
         {
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            Log.Information("Starting PricingService");
+            CreateWebHostBuilder(args).Build().Run();
         }
+        catch (Exception e)
+        {
+            Log.Fatal(e, "PricingService terminated unexpectedly");
+        }
+        finally
+        {
+            Log.CloseAndFlush();
+        }
+    }
 
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-        app.Run();
+    private static IHostBuilder CreateWebHostBuilder(string[] args)
+    {
+        return Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
+            .UseSerilog();
     }
 }

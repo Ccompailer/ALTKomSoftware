@@ -10,6 +10,8 @@
     <ItemGroup>
         <PackageReference Include="MediatR"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
+        <PackageReference Include="Serilog"/>
+        <PackageReference Include="Serilog.AspNetCore"/>
         <PackageReference Include="Swashbuckle.AspNetCore"/>
         <PackageReference Include="StyleCop.Analyzers">
             <PrivateAssets>all</PrivateAssets>

@@ -12,6 +12,9 @@ root = true
 # Требует, чтобы все элементы (типы, методы, свойства и т.д.) имели XML-комментарий.
 dotnet_diagnostic.SA1600.severity = error
 
+# Убираем префикс this.
+dotnet_diagnostic.SA1101.severity = none
+
 # Требует чтобы сначала шел namespace, а потом using-и
 dotnet_diagnostic.SA1200.severity = none
 
@@ -93,6 +96,9 @@ dotnet_diagnostic.SA1629.severity = none
 
 # Запрещает использование /// для однострочных комментариев, которые не являются XML-документацией.
 dotnet_diagnostic.SA1626.severity = error
+
+#Убирает suggest по тексту summary у конструкторов
+dotnet_diagnostic.SA1642.severity = none
 
 # Рекомендует использовать <inheritdoc /> для переопределенных или реализованных членов, если документация должна наследоваться.
 dotnet_diagnostic.SA1648.severity = suggestion
