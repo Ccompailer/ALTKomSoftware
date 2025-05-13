@@ -19,4 +19,13 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Handlers\QueryHandlers\" />
+      <Folder Include="UnitOfWork\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ProductService.Api\ProductService.Api.csproj" />
+    </ItemGroup>
+
 </Project>
