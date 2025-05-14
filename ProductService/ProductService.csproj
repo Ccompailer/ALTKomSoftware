@@ -21,7 +21,6 @@
 
     <ItemGroup>
       <Folder Include="Handlers\QueryHandlers\" />
-      <Folder Include="UnitOfWork\" />
     </ItemGroup>
 
     <ItemGroup>

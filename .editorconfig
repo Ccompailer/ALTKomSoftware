@@ -84,7 +84,7 @@ dotnet_diagnostic.SA1620.severity = warning
 # --- Стиль и форматирование текста документации ---
 
 # Требует, чтобы summary для свойства описывало, что оно "gets or sets" (или "gets" / "sets" для свойств только для чтения/записи).
-dotnet_diagnostic.SA1623.severity = warning # Может быть слишком строгим, настройте по необходимости
+dotnet_diagnostic.SA1623.severity = none # Может быть слишком строгим, настройте по необходимости
 
 # Рекомендует избегать артикля "the" в начале summary для свойств, чтобы улучшить читаемость генерируемой документации.
 dotnet_diagnostic.SA1624.severity = warning
