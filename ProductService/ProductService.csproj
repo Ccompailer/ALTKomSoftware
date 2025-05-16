@@ -25,6 +25,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ProductService.Api\ProductService.Api.csproj" />
+      <ProjectReference Include="..\ProductService.Persistence\ProductService.Persistence.csproj" />
     </ItemGroup>
 
 </Project>

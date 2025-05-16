@@ -18,6 +18,9 @@ dotnet_diagnostic.SA1101.severity = none
 # Требует чтобы сначала шел namespace, а потом using-и
 dotnet_diagnostic.SA1200.severity = none
 
+# Убирает требование убирать _ у приватныех полей класса
+dotnet_diagnostic.SA1309.severity = none
+
 # Требует, чтобы каждая часть частичного (partial) элемента была документирована.
 dotnet_diagnostic.SA1601.severity = error
 
