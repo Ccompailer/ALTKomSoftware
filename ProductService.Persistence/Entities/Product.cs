@@ -95,6 +95,11 @@ public class Product
     public IList<Question> Questions { get; }
 
     /// <summary>
+    /// Статус продукта
+    /// </summary>
+    public ProductStatus Status { get; private set; }
+
+    /// <summary>
     /// Максимальное количество застрахованных объектов, разрешенное по продукту
     /// </summary>
     public int MaxNumberOfInsured { get; }
