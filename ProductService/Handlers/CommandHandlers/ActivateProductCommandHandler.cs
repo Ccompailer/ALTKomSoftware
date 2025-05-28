@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using ProductService.Api.Commands;
 using ProductService.Api.Commands.Results;
+using ProductService.Handlers.Services;
 using ProductService.Persistence.AppDbContext;
 
 namespace ProductService.Handlers.CommandHandlers;
@@ -10,6 +11,7 @@ namespace ProductService.Handlers.CommandHandlers;
 /// </summary>
 public class ActivateProductCommandHandler : IRequestHandler<ActivateProductCommand, ActivateProductResult>
 {
+    private readonly IProductFlowService _flowService;
     private readonly ILogger<ActivateProductCommandHandler> _logger;
     private readonly IAppContext _appContext;
 
@@ -18,10 +20,15 @@ public class ActivateProductCommandHandler : IRequestHandler<ActivateProductComm
     /// </summary>
     /// <param name="appContext">Контекст ProductService</param>
     /// <param name="logger">Логгер для обработчика</param>
-    public ActivateProductCommandHandler(IAppContext appContext, ILogger<ActivateProductCommandHandler> logger)
+    /// <param name="flowService">Сервис бизнес-логики ProductService</param>
+    public ActivateProductCommandHandler(
+        IAppContext appContext,
+        ILogger<ActivateProductCommandHandler> logger,
+        IProductFlowService flowService)
     {
         _appContext = appContext;
         _logger = logger;
+        _flowService = flowService;
     }
 
     /// <summary>
@@ -30,8 +37,10 @@ public class ActivateProductCommandHandler : IRequestHandler<ActivateProductComm
     /// <param name="command">Команда на создание с параметрами</param>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Созданный продукт</returns>
-    public Task<ActivateProductResult> Handle(ActivateProductCommand command, CancellationToken cancellationToken)
+    public async Task<ActivateProductResult> Handle(ActivateProductCommand command, CancellationToken cancellationToken)
     {
-        
+        await _flowService.ActiveProductAsync(command.ProductId, cancellationToken);
+
+        return new ActivateProductResult(command.ProductId);
     }
 }
