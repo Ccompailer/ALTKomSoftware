@@ -26,6 +26,7 @@ public class Startup
     {
         services.AddAuthorization();
         services.AddSwaggerDocs();
+        services.AddServices();
     }
 
     /// <summary>
