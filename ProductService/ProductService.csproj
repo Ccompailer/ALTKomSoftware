@@ -28,4 +28,10 @@
       <ProjectReference Include="..\ProductService.Persistence\ProductService.Persistence.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="Handlers\Services\IProductFlowService.cs">
+        <DependentUpon>ProductFlowService.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
 </Project>
