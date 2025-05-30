@@ -17,14 +17,13 @@ public class ProductFlowService(IAppContext appContext, ILogger<ProductFlowServi
     public async Task ActiveProductAsync(Guid productId, CancellationToken ct)
     {
         var product = await _appContext.Products.FindAsync([productId], ct);
-
         if (product is null)
         {
             logger.LogInformation($"Product [{productId}] doesn't exist");
+            return;
         }
 
-        // TODO: Add logic for success result.
-        // Call product method for change product status to 'Active'
+        product.SetActiveStatus();
         await _appContext.SaveChangesAsync(ct);
     }
 }

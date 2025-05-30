@@ -108,4 +108,21 @@ public class Product
     /// Иконка продукта
     /// </summary>
     public string ProductIcon { get; }
+
+    /// <summary>
+    /// Setter для установки статуса <see cref="ProductStatus.Active"/>
+    /// </summary>
+    public void SetActiveStatus()
+    {
+        IsDraft();
+        Status = ProductStatus.Active;
+    }
+
+    private void IsDraft()
+    {
+        if (Status is not ProductStatus.Draft)
+        {
+            throw new ApplicationException("Only draft version can be modified and activated");
+        }
+    }
 }
