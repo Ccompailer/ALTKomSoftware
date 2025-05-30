@@ -1,4 +1,7 @@
 ﻿using ProductService.Extensions.Startup;
+using ProductService.Persistence.AppDbContext;
+
+using AppContext = ProductService.Persistence.AppDbContext.AppContext;
 
 namespace ProductService;
 
@@ -27,6 +30,8 @@ public class Startup
         services.AddAuthorization();
         services.AddSwaggerDocs();
         services.AddServices();
+        services.AddDbContext<IAppContext, AppContext>();
+        services.AddControllers();
     }
 
     /// <summary>

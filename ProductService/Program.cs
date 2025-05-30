@@ -21,6 +21,7 @@ public class Program
             .MinimumLevel.Debug()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
             .Enrich.FromLogContext()
+            .WriteTo.Console()
             .WriteTo.OpenTelemetry(opt =>
             {
                 opt.ResourceAttributes = new Dictionary<string, object>
