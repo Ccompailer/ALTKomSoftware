@@ -1,3 +1,6 @@
+using OpenTelemetry.Exporter;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Resources;
 using Serilog;
 using Serilog.Events;
 
@@ -18,7 +21,14 @@ public class Program
             .MinimumLevel.Debug()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
             .Enrich.FromLogContext()
-            .WriteTo.Console()
+            .WriteTo.OpenTelemetry(opt =>
+            {
+                opt.ResourceAttributes = new Dictionary<string, object>
+                {
+                    ["serviceName"] = "ProductService",
+                    ["version"] = "1.0.0",
+                };
+            })
             .CreateLogger();
 
         try
@@ -40,6 +50,17 @@ public class Program
     {
         return Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
-            .UseSerilog();
+            .UseSerilog()
+            .ConfigureServices((_, services) =>
+            {
+                services.AddOpenTelemetry()
+                    .ConfigureResource(builder =>
+                    {
+                        builder.AddService("ProductService", serviceVersion: "1.0.0");
+                    })
+                    .WithLogging(logging =>
+                        logging.AddConsoleExporter(opt =>
+                            opt.Targets = ConsoleExporterOutputTargets.Console));
+            });
     }
 }
