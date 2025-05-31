@@ -10,7 +10,8 @@ namespace ProductService.Controllers.v1;
 /// </summary>
 [Route("api/v1/product")]
 [ApiController]
-public class ProductServiceController(IMediator mediator) : ControllerBase
+public class ProductServiceController(IMediator mediator)
+    : ControllerBase
 {
     private readonly IMediator _mediator = mediator;
 

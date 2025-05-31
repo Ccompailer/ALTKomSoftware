@@ -1,4 +1,7 @@
-﻿using ProductService.Persistence.AppDbContext;
+﻿using ProductService.Api.Commands.DTOs;
+using ProductService.Api.Commands.Results;
+using ProductService.Persistence.AppDbContext;
+using ProductService.Persistence.Entities;
 
 namespace ProductService.Handlers.Services;
 
@@ -25,5 +28,17 @@ public class ProductFlowService(IAppContext appContext, ILogger<ProductFlowServi
 
         product.SetActiveStatus();
         await _appContext.SaveChangesAsync(ct);
+    }
+
+    /// <inheritdoc />
+    public Task<CreateDraftProductResult> CreateDraftProductAsync(ProductDraftDto productInfo, CancellationToken cancellationToken)
+    {
+        var product = new Product(
+            productInfo.Name,
+            productInfo.Description,
+            productInfo.Image,
+            productInfo.Code,
+            productInfo.MaxNumberOfInsured,
+            productInfo.Icon);
     }
 }

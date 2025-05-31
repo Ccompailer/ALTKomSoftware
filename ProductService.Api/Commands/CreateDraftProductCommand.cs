@@ -4,4 +4,4 @@ using ProductService.Api.Commands.Results;
 
 namespace ProductService.Api.Commands;
 
-public record CreateProductDraftCommand(ProductDraftDto ProductDraft) : IRequest<CreateProductDraftResult>;
+public record CreateDraftProductCommand(ProductDraftDto ProductDraft) : IRequest<CreateDraftProductResult>;
