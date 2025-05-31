@@ -19,7 +19,7 @@ public class ProductFlowService(IAppContext appContext, ILogger<ProductFlowServi
         var product = await _appContext.Products.FindAsync([productId], ct);
         if (product is null)
         {
-            logger.LogInformation($"Product [{productId}] doesn't exist");
+            logger.LogInformation("Product [{ProductId}] doesn't exist", productId);
             return;
         }
 

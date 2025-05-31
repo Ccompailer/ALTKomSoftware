@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using ProductService.Api.Commands;
+using ProductService.Api.Commands.Results;
 
 namespace ProductService.Controllers.v1;
 
@@ -7,8 +10,10 @@ namespace ProductService.Controllers.v1;
 /// </summary>
 [Route("api/v1/product")]
 [ApiController]
-public class ProductServiceController : ControllerBase
+public class ProductServiceController(IMediator mediator) : ControllerBase
 {
+    private readonly IMediator _mediator = mediator;
+
     /// <summary>
     /// Получение всех продуктов
     /// </summary>
@@ -33,12 +38,11 @@ public class ProductServiceController : ControllerBase
     /// <summary>
     /// Активация продукта
     /// </summary>
-    /// <returns>Не воз</returns>
+    /// <param name="request">Запрос на изменение активацию продукта</param>
+    /// <returns>Активированный продукт</returns>
     [HttpPatch("/activate")]
-    public async Task Activate()
-    {
-        // Todo
-    }
+    public async Task<ActivateProductResult> Activate([FromQuery] ActivateProductCommand request)
+        => await _mediator.Send(request);
 
     /// <summary>
     /// Создание draft-продукта
