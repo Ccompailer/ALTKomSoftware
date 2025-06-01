@@ -6,9 +6,9 @@ using ProductService.Handlers.Services;
 namespace ProductService.Handlers.CommandHandlers;
 
 /// <summary>
-/// афыафы
+/// Класс обработчика создания нового продукта
 /// </summary>
-/// <param name="productFlowService">афыа</param>
+/// <param name="productFlowService">Сервис работы с продуктами и хэлпер классами</param>
 public class CreateDraftProductCommandHandler(IProductFlowService productFlowService)
     : IRequestHandler<CreateDraftProductCommand, CreateDraftProductResult>
 {
@@ -20,17 +20,10 @@ public class CreateDraftProductCommandHandler(IProductFlowService productFlowSer
     /// <param name="request">Команда на создание продукта</param>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Созданный продукт</returns>
-    public Task<CreateDraftProductResult> Handle(CreateDraftProductCommand request, CancellationToken cancellationToken)
+    public async Task<CreateDraftProductResult> Handle(CreateDraftProductCommand request, CancellationToken cancellationToken)
     {
-        // string Code,
-        // string Name,
-        // string Image,
-        // string Description,
-        // int MaxNumberOfInsured,
-        // string Icon,
-        //     IList<CoverDto> Covers,
-        // IList<AbstractQuestionDto> Questions
+       var result = await _productFlowService.CreateDraftProductAsync(request.ProductDraft, cancellationToken);
 
-        request.ProductDraft.
+       return result;
     }
 }

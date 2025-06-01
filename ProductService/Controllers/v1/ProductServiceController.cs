@@ -40,20 +40,25 @@ public class ProductServiceController(IMediator mediator)
     /// Активация продукта
     /// </summary>
     /// <param name="request">Запрос на изменение активацию продукта</param>
+    /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Активированный продукт</returns>
     [HttpPatch("/activate")]
-    public async Task<ActivateProductResult> Activate([FromQuery] ActivateProductCommand request)
-        => await _mediator.Send(request);
+    public async Task<ActivateProductResult> Activate(
+        [FromQuery] ActivateProductCommand request,
+        CancellationToken cancellationToken)
+        => await _mediator.Send(request, cancellationToken);
 
     /// <summary>
     /// Создание draft-продукта
     /// </summary>
-    /// <returns>Не воз</returns>
+    /// <param name="request">Запрос на создание продукта</param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <returns>Идентификатор нового продукта</returns>
     [HttpPost]
-    public async Task CreateDraft()
-    {
-        // Todo
-    }
+    public async Task<CreateDraftProductResult> CreateDraft(
+        [FromBody] CreateDraftProductCommand request,
+        CancellationToken cancellationToken)
+        => await _mediator.Send(request, cancellationToken);
 
     /// <summary>
     /// Получение продукта по коду

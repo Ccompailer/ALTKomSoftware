@@ -125,6 +125,20 @@ public class Product
         Status = ProductStatus.Active;
     }
 
+    /// <summary>
+    /// Добавление покрытий по продукту
+    /// </summary>
+    /// <param name="covers">Покрытия по продукту</param>
+    public void AddCovers(IReadOnlyCollection<Cover> covers)
+        => Covers.ToList().AddRange(covers);
+
+    /// <summary>
+    /// Добавление вопросв по продукту
+    /// </summary>
+    /// <param name="questions">Вопросы по продукту</param>
+    public void AddQuestions(IReadOnlyCollection<Question> questions)
+        => Questions.ToList().AddRange(questions);
+
     private void IsDraft()
     {
         if (Status is not ProductStatus.Draft)

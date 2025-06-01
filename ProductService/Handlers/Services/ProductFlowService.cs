@@ -1,7 +1,6 @@
 ﻿using ProductService.Api.Commands.DTOs;
 using ProductService.Api.Commands.Results;
 using ProductService.Persistence.AppDbContext;
-using ProductService.Persistence.Entities;
 
 namespace ProductService.Handlers.Services;
 
@@ -31,14 +30,13 @@ public class ProductFlowService(IAppContext appContext, ILogger<ProductFlowServi
     }
 
     /// <inheritdoc />
-    public Task<CreateDraftProductResult> CreateDraftProductAsync(ProductDraftDto productInfo, CancellationToken cancellationToken)
+    public async Task<CreateDraftProductResult> CreateDraftProductAsync(ProductDraftDto productInfo, CancellationToken cancellationToken)
     {
-        var product = new Product(
-            productInfo.Name,
-            productInfo.Description,
-            productInfo.Image,
-            productInfo.Code,
-            productInfo.MaxNumberOfInsured,
-            productInfo.Icon);
+        var product = productInfo.ToProductMapper();
+
+        await _appContext.Products.AddAsync(product, cancellationToken);
+        await _appContext.SaveChangesAsync(cancellationToken);
+
+        return new CreateDraftProductResult(product.Id);
     }
 }
