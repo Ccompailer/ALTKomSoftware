@@ -57,6 +57,9 @@ public class Product
         Code = code;
         MaxNumberOfInsured = maxNumberOfInsured;
         ProductIcon = productIcon;
+        Status = ProductStatus.Draft;
+        Covers = new List<Cover>();
+        Questions = new List<Question>();
     }
 
     /// <summary>
@@ -85,21 +88,6 @@ public class Product
     public string Image { get; }
 
     /// <summary>
-    /// Список покрытий, доступных по данному продукту
-    /// </summary>
-    public IList<Cover> Covers { get; }
-
-    /// <summary>
-    /// Список вопросов, связанных с данным продуктом (например, для анкеты)
-    /// </summary>
-    public IList<Question> Questions { get; }
-
-    /// <summary>
-    /// Статус продукта
-    /// </summary>
-    public ProductStatus Status { get; private set; }
-
-    /// <summary>
     /// Максимальное количество застрахованных объектов, разрешенное по продукту
     /// </summary>
     public int MaxNumberOfInsured { get; }
@@ -108,6 +96,25 @@ public class Product
     /// Иконка продукта
     /// </summary>
     public string ProductIcon { get; }
+
+    /// <summary>
+    /// Список покрытий, доступных по данному продукту
+    /// </summary>
+    public IReadOnlyList<Cover> CoversReadOnly => Covers.AsReadOnly();
+
+    /// <summary>
+    /// Список вопросов, связанных с данным продуктом (например, для анкеты)
+    /// </summary>
+    public IReadOnlyList<Question> QuestionsReadOnly => Questions.AsReadOnly();
+
+    /// <summary>
+    /// Статус продукта
+    /// </summary>
+    public ProductStatus Status { get; private set; }
+
+    private IList<Cover> Covers { get; }
+
+    private IList<Question> Questions { get; }
 
     /// <summary>
     /// Setter для установки статуса <see cref="ProductStatus.Active"/>
