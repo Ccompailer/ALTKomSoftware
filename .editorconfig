@@ -1,0 +1,115 @@
+﻿# Обозначает, что это корневой .editorconfig, и настройки из файлов в родительских директориях не должны применяться.
+root = true
+
+[*.cs]
+
+# ===================================================================
+# StyleCop.Analyzers - Правила Документации (SA16xx)
+# ===================================================================
+
+# --- Общие требования к документации ---
+
+# Требует, чтобы все элементы (типы, методы, свойства и т.д.) имели XML-комментарий.
+dotnet_diagnostic.SA1600.severity = error
+
+# Убираем префикс this.
+dotnet_diagnostic.SA1101.severity = none
+
+# Требует чтобы сначала шел namespace, а потом using-и
+dotnet_diagnostic.SA1200.severity = none
+
+# Убирает требование убирать _ у приватныех полей класса
+dotnet_diagnostic.SA1309.severity = none
+
+# Требует, чтобы каждая часть частичного (partial) элемента была документирована.
+dotnet_diagnostic.SA1601.severity = error
+
+# Требует, чтобы каждый элемент перечисления (enum) был документирован.
+dotnet_diagnostic.SA1602.severity = error
+
+# --- Содержимое XML-тегов ---
+
+# Требует, чтобы документация элемента содержала тег <summary>.
+dotnet_diagnostic.SA1604.severity = error
+
+# Требует, чтобы документация частичного элемента содержала тег <summary>.
+dotnet_diagnostic.SA1605.severity = error
+
+# Требует, чтобы документация элемента перечисления содержала тег <summary>.
+dotnet_diagnostic.SA1606.severity = error
+
+# Это специфическое правило, но SA1600 обычно покрывает это. Может быть полезно для акцента.
+dotnet_diagnostic.SA1607.severity = error
+
+# Требует, чтобы тег <summary> (и другие основные теги) не был пустым.
+dotnet_diagnostic.SA1608.severity = error
+
+# --- Документация параметров ---
+
+# Требует, чтобы все параметры метода, индексатора или конструктора были документированы с использованием тега <param>.
+dotnet_diagnostic.SA1611.severity = error
+
+# Проверяет, что теги <param> соответствуют фактическим параметрам элемента (имена и порядок).
+dotnet_diagnostic.SA1612.severity = error
+
+# Проверяет орфографию в именах параметров в тегах <param>. (Может требовать дополнительной настройки словарей)
+dotnet_diagnostic.SA1613.severity = warning
+
+# Требует, чтобы тег <param> содержал описание.
+dotnet_diagnostic.SA1614.severity = error
+
+# --- Документация возвращаемых значений ---
+
+# Требует, чтобы методы, возвращающие значение, имели тег <returns>.
+dotnet_diagnostic.SA1615.severity = error
+
+# Требует, чтобы тег <returns> содержал описание.
+dotnet_diagnostic.SA1616.severity = error
+
+# --- Документация параметров типа ---
+
+
+# Требует, чтобы параметры универсального типа (generic type parameters) были документированы с использованием тега <typeparam>.
+dotnet_diagnostic.SA1617.severity = error
+
+# Проверяет, что теги <typeparam> соответствуют фактическим параметрам типа.
+dotnet_diagnostic.SA1618.severity = error
+
+
+# Требует, чтобы тег <typeparam> содержал описание.
+dotnet_diagnostic.SA1619.severity = error
+
+# --- Документация исключений ---
+
+# Проверяет правильность использования тега <exception>. (Редко используется как error, чаще warning)
+dotnet_diagnostic.SA1620.severity = warning
+
+# --- Стиль и форматирование текста документации ---
+
+# Требует, чтобы summary для свойства описывало, что оно "gets or sets" (или "gets" / "sets" для свойств только для чтения/записи).
+dotnet_diagnostic.SA1623.severity = none # Может быть слишком строгим, настройте по необходимости
+
+# Рекомендует избегать артикля "the" в начале summary для свойств, чтобы улучшить читаемость генерируемой документации.
+dotnet_diagnostic.SA1624.severity = warning
+
+# Помогает выявить случаи, когда документация была просто скопирована с другого элемента и не изменена.
+dotnet_diagnostic.SA1625.severity = error
+
+dotnet_diagnostic.SA1629.severity = none
+
+# Запрещает использование /// для однострочных комментариев, которые не являются XML-документацией.
+dotnet_diagnostic.SA1626.severity = error
+
+#Убирает suggest по тексту summary у конструкторов
+dotnet_diagnostic.SA1642.severity = none
+
+# Рекомендует использовать <inheritdoc /> для переопределенных или реализованных членов, если документация должна наследоваться.
+dotnet_diagnostic.SA1648.severity = suggestion
+
+# SA1649: File name should match first type name
+# Требует, чтобы имя файла совпадало с именем первого публичного типа в этом файле.
+dotnet_diagnostic.SA1649.severity = error
+
+# SA1651: Do not use placeholder text in documentation
+# Запрещает использование заполнителей типа "TODO: Document this" в XML-комментариях.
+dotnet_diagnostic.SA1651.severity = error
