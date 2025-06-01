@@ -15,7 +15,10 @@ public class ProductServiceController(IMediator mediator)
 {
     private readonly IMediator _mediator = mediator;
 
- 
+    /// <summary>
+    /// Получение всех продуктов
+    /// </summary>
+    /// <returns>Не воз</returns>
     [HttpGet("/all")]
     public async Task GetAll()
     {
