@@ -1,51 +1,67 @@
+using OpenTelemetry.Exporter;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Resources;
+using Serilog;
+using Serilog.Events;
+
 namespace ProductService;
 
+/// <summary>
+/// Основной класс конфигурации веб-приложения
+/// </summary>
 public class Program
 {
+    /// <summary>
+    /// Метод старта приложения
+    /// </summary>
+    /// <param name="args">Аргументы командной строки</param>
     public static void Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
-
-        // Add services to the container.
-        builder.Services.AddAuthorization();
-
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-
-        var app = builder.Build();
-
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-        var summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        app.MapGet("/weatherforecast", (HttpContext httpContext) =>
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            .Enrich.FromLogContext()
+            .WriteTo.Console()
+            .WriteTo.OpenTelemetry(opt =>
             {
-                var forecast = Enumerable.Range(1, 5).Select(index =>
-                        new WeatherForecast
-                        {
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                            TemperatureC = Random.Shared.Next(-20, 55),
-                            Summary = summaries[Random.Shared.Next(summaries.Length)]
-                        })
-                    .ToArray();
-                return forecast;
+                opt.ResourceAttributes = new Dictionary<string, object>
+                {
+                    ["serviceName"] = "ProductService",
+                    ["version"] = "1.0.0",
+                };
             })
-            .WithName("GetWeatherForecast")
-            .WithOpenApi();
+            .CreateLogger();
 
-        app.Run();
+        try
+        {
+            Log.Information("Starting PricingService");
+            CreateWebHostBuilder(args).Build().Run();
+        }
+        catch (Exception e)
+        {
+            Log.Fatal(e, "PricingService terminated unexpectedly");
+        }
+        finally
+        {
+            Log.CloseAndFlush();
+        }
+    }
+
+    private static IHostBuilder CreateWebHostBuilder(string[] args)
+    {
+        return Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
+            .UseSerilog()
+            .ConfigureServices((_, services) =>
+            {
+                services.AddOpenTelemetry()
+                    .ConfigureResource(builder =>
+                    {
+                        builder.AddService("ProductService", serviceVersion: "1.0.0");
+                    })
+                    .WithLogging(logging =>
+                        logging.AddConsoleExporter(opt =>
+                            opt.Targets = ConsoleExporterOutputTargets.Console));
+            });
     }
 }

@@ -4,11 +4,41 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.7"/>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="MediatR"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
+        <PackageReference Include="OpenTelemetry" />
+        <PackageReference Include="OpenTelemetry.Api" />
+        <PackageReference Include="OpenTelemetry.Api.ProviderBuilderExtensions" />
+        <PackageReference Include="OpenTelemetry.Exporter.Console" />
+        <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
+        <PackageReference Include="Serilog"/>
+        <PackageReference Include="Serilog.AspNetCore"/>
+        <PackageReference Include="Serilog.Sinks.OpenTelemetry" />
+        <PackageReference Include="Swashbuckle.AspNetCore"/>
+        <PackageReference Include="StyleCop.Analyzers">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Handlers\QueryHandlers\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ProductService.Api\ProductService.Api.csproj" />
+      <ProjectReference Include="..\ProductService.Persistence\ProductService.Persistence.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Handlers\Services\IProductFlowService.cs">
+        <DependentUpon>ProductFlowService.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>
