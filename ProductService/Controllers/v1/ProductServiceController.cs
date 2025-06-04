@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ProductService.Api.Commands;
 using ProductService.Api.Commands.Results;
+using ProductService.Api.Queries;
 
 namespace ProductService.Controllers.v1;
 
@@ -29,11 +30,13 @@ public class ProductServiceController(IMediator mediator)
     /// Получение продукта по коду
     /// </summary>
     /// <param name="code">Код продукта</param>
+    /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Не воз</returns>
     [HttpGet("{code}")]
-    public async Task GetByCode(string code)
+    public async Task GetByCode(string code, CancellationToken cancellationToken)
     {
-        // Todo
+        var result = await _mediator.Send(
+            new GetProductByCodeQuery(code), cancellationToken);
     }
 
     /// <summary>
