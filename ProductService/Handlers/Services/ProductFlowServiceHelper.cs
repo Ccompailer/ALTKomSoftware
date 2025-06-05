@@ -96,18 +96,18 @@ public static class ProductFlowServiceHelper
             product.Description,
             product.MaxNumberOfInsured,
             product.ProductIcon,
-            (IList<AbstractQuestionDto>)ToQuestionDtos(product.QuestionsReadOnly),
+            ToQuestionDtos(product.QuestionsReadOnly),
             product.CoversReadOnly);
 
-        static IReadOnlyList<AbstractQuestionDto> ToQuestionDtos(IReadOnlyList<Question> questions)
+        static List<AbstractQuestionDto> ToQuestionDtos(IReadOnlyList<Question> questions)
         {
             return questions.Select<Question, AbstractQuestionDto>(q =>
-                q.GetType().Name switch
+                q switch
                 {
-                    nameof(NumericQuestionDto) => new NumericQuestionDto(q.Code, q.Index, q.Text),
-                    nameof(DateQuestionDto) => new DateQuestionDto(q.Code, q.Index, q.Text),
-                    nameof(ChoiceQuestionDto) => new ChoiceQuestionDto(q.Code, q.Index, q.Text, new List<ChoiceDto>())
-                }).ToArray().AsReadOnly();
+                    NumericQuestion => new NumericQuestionDto(q.Code, q.Index, q.Text),
+                    DateQuestion => new DateQuestionDto(q.Code, q.Index, q.Text),
+                    ChoiceQuestion => new ChoiceQuestionDto(q.Code, q.Index, q.Text, new List<ChoiceDto>())
+                }).ToList();
         }
     }
 }
