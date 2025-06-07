@@ -8,6 +8,6 @@ public record ProductDto(
     string Image,
     string Description,
     int MaxNumberOfInsured,
-    string Icons,
+    string Icon,
     IList<AbstractQuestionDto> Questions,
     IList<CoverDto> Covers);

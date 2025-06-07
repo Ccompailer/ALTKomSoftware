@@ -1,5 +1,7 @@
-﻿using ProductService.Api.Commands.DTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using ProductService.Api.Commands.DTOs;
 using ProductService.Api.Commands.Results;
+using ProductService.Api.Queries.DTOs;
 using ProductService.Persistence.AppDbContext;
 
 namespace ProductService.Handlers.Services;
@@ -38,5 +40,18 @@ public class ProductFlowService(IAppContext appContext, ILogger<ProductFlowServi
         await _appContext.SaveChangesAsync(cancellationToken);
 
         return new CreateDraftProductResult(product.Id);
+    }
+
+    /// <inheritdoc />
+    public async Task<ProductDto> GetProductByCodeAsync(string code, CancellationToken ct)
+    {
+        var product = await _appContext.Products
+            .SingleOrDefaultAsync(p => p.Code.Equals(code, StringComparison.OrdinalIgnoreCase), ct);
+        
+        if (product is null)
+        {
+            logger.LogInformation("No product found by code {Code}", code);
+            return;
+        }
     }
 }

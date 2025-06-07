@@ -1,4 +1,5 @@
-﻿using ProductService.Api.Abstractions.DTOs;
+﻿using System.Reflection;
+using ProductService.Api.Abstractions.DTOs;
 using ProductService.Api.Commands.DTOs;
 using ProductService.Api.Queries.DTOs;
 using ProductService.Api.Queries.DTOs.Questions;
@@ -79,5 +80,34 @@ public static class ProductFlowServiceHelper
             => choiceInfos
                 .Select(ci => new Choice(ci.Code, ci.Label))
                 .ToList();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="product"></param>
+    /// <returns></returns>
+    public static ProductDto ToProductDto(this Product product)
+    {
+        return new ProductDto(
+            product.Code,
+            product.Name,
+            product.Image,
+            product.Description,
+            product.MaxNumberOfInsured,
+            product.ProductIcon,
+            ToQuestionDtos(product.QuestionsReadOnly),
+            product.CoversReadOnly);
+
+        static List<AbstractQuestionDto> ToQuestionDtos(IReadOnlyList<Question> questions)
+        {
+            return questions.Select<Question, AbstractQuestionDto>(q =>
+                q switch
+                {
+                    NumericQuestion => new NumericQuestionDto(q.Code, q.Index, q.Text),
+                    DateQuestion => new DateQuestionDto(q.Code, q.Index, q.Text),
+                    ChoiceQuestion => new ChoiceQuestionDto(q.Code, q.Index, q.Text, new List<ChoiceDto>())
+                }).ToList();
+        }
     }
 }

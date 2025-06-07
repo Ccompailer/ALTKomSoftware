@@ -3,4 +3,4 @@ using ProductService.Api.Queries.DTOs;
 
 namespace ProductService.Api.Queries;
 
-public record FindProductByCodeQuery(string ProductCode) : IRequest<ProductDto>;
+public record GetProductByCodeQuery(string ProductCode) : IRequest<ProductDto>;
