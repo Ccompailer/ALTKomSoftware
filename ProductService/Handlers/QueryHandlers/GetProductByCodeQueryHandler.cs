@@ -28,6 +28,9 @@ public class GetProductByCodeQueryHandler(
     public async Task<ProductDto> Handle(GetProductByCodeQuery request, CancellationToken cancellationToken)
     {
         var product = await _flowService.GetProductByCodeAsync(request.ProductCode, cancellationToken);
+
+        //TODO: Сделать проверку на то что если это Default Dto,
+        //то значит не был найден продукт и там пустой респонс
     }
 
 }
