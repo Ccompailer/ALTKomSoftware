@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using ProductService.Api.Commands;
 using ProductService.Api.Commands.Results;
 using ProductService.Api.Queries;
+using ProductService.Api.Queries.DTOs;
+using ProductService.Handlers.Services;
 
 namespace ProductService.Controllers.v1;
 
@@ -33,10 +35,16 @@ public class ProductServiceController(IMediator mediator)
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Не воз</returns>
     [HttpGet("{code}")]
-    public async Task GetByCode(string code, CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IResult> GetByCode(string code, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
             new GetProductByCodeQuery(code), cancellationToken);
+
+        return result.Equals(ProductFlowServiceHelper.CreateDefaultProductDto())
+            ? Results.NotFound(result)
+            : Results.Ok(result);
     }
 
     /// <summary>

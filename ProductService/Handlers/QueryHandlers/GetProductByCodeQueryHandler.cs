@@ -7,10 +7,10 @@ using ProductService.Persistence.AppDbContext;
 namespace ProductService.Handlers.QueryHandlers;
 
 /// <summary>
-/// 
+/// Класс обработчика запроса
 /// </summary>
-/// <param name="appContext"></param>
-/// <param name="flowService"></param>
+/// <param name="appContext">Контекс приложения для работы с БД</param>
+/// <param name="flowService">Сервис бизнес-логики ProductService</param>
 public class GetProductByCodeQueryHandler(
     IAppContext appContext,
     IProductFlowService flowService
@@ -18,19 +18,18 @@ public class GetProductByCodeQueryHandler(
 {
     private readonly IAppContext _appContext = appContext ?? throw new ArgumentNullException(nameof(appContext));
     private readonly IProductFlowService _flowService = flowService ?? throw new ArgumentNullException(nameof(flowService));
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="request"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    public async Task<ProductDto> Handle(GetProductByCodeQuery request, CancellationToken cancellationToken)
-    {
-        var product = await _flowService.GetProductByCodeAsync(request.ProductCode, cancellationToken);
 
-        //TODO: Сделать проверку на то что если это Default Dto,
-        //то значит не был найден продукт и там пустой респонс
+    /// <summary>
+    /// Метод обработки запроса
+    /// </summary>
+    /// <param name="query">Запрос</param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <returns>Объект продукта</returns>
+    public async Task<ProductDto> Handle(GetProductByCodeQuery query, CancellationToken cancellationToken)
+    {
+        var product = await _flowService.GetProductByCodeAsync(query.ProductCode, cancellationToken);
+
+        return product;
     }
 
 }
