@@ -29,4 +29,18 @@ public record ProductDto(
                other.Image == Image &&
                other.Questions.Count == Questions.Count;
     }
+
+    /// <inheritdoc />
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(
+            Code,
+            Name,
+            Image,
+            Description,
+            MaxNumberOfInsured,
+            Questions,
+            Covers,
+            Icon);
+    }
 }
