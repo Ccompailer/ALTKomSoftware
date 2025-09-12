@@ -25,12 +25,12 @@ public interface IProductFlowService
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Созданный продукт</returns>
     Task<CreateDraftProductResult> CreateDraftProductAsync(ProductDraftDto productInfo, CancellationToken cancellationToken);
-    
+
     /// <summary>
-    /// 
+    /// Получение продукта по коду
     /// </summary>
-    /// <param name="code"></param>
-    /// <param name="ct"></param>
-    /// <returns></returns>
+    /// <param name="code">Код продукта</param>
+    /// <param name="ct">Токен отмены</param>
+    /// <returns>Объект продукта</returns>
     Task<ProductDto> GetProductByCodeAsync(string code, CancellationToken ct);
 }

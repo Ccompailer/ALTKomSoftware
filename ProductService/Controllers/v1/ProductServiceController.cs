@@ -21,9 +21,10 @@ public class ProductServiceController(IMediator mediator)
     /// <summary>
     /// Получение всех продуктов
     /// </summary>
-    /// <returns>Не воз</returns>
+    /// <returns>Возвращает все продукты</returns>
     [HttpGet("/all")]
-    public async Task GetAll()
+    [ProducesResponseType(typeof(IReadOnlyCollection<ProductDto>), StatusCodes.Status200OK)]
+    public async Task<IResult> GetAll()
     {
         // Todo
     }
@@ -54,10 +55,11 @@ public class ProductServiceController(IMediator mediator)
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Активированный продукт</returns>
     [HttpPatch("/activate")]
-    public async Task<ActivateProductResult> Activate(
+    [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
+    public async Task<IResult> Activate(
         [FromQuery] ActivateProductCommand request,
         CancellationToken cancellationToken)
-        => await _mediator.Send(request, cancellationToken);
+        => Results.Ok(await _mediator.Send(request, cancellationToken));
 
     /// <summary>
     /// Создание draft-продукта
@@ -66,17 +68,19 @@ public class ProductServiceController(IMediator mediator)
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Идентификатор нового продукта</returns>
     [HttpPost]
-    public async Task<CreateDraftProductResult> CreateDraft(
+    [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
+    public async Task<IResult> CreateDraft(
         [FromBody] CreateDraftProductCommand request,
         CancellationToken cancellationToken)
-        => await _mediator.Send(request, cancellationToken);
+        => Results.Ok(await _mediator.Send(request, cancellationToken));
 
     /// <summary>
-    /// Получение продукта по коду
+    /// Снятие продукта с производства.
     /// </summary>
-    /// <returns>Не воз</returns>
+    /// <returns>HTTP 200</returns>
     [HttpPatch("/discontinue")]
-    public async Task Discontinue()
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IResult> Discontinue()
     {
         // Todo
     }
