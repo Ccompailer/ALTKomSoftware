@@ -8,6 +8,39 @@ public record ProductDto(
     string Image,
     string Description,
     int MaxNumberOfInsured,
-    string Icons,
+    string Icon,
     IList<AbstractQuestionDto> Questions,
-    IList<CoverDto> Covers);
+    IList<CoverDto> Covers)
+{
+    /// <inheritdoc />
+    public virtual bool Equals(ProductDto? other)
+    {
+        if (other is null)
+        {
+            return false;
+        }
+
+        return other.Code == Code &&
+               other.Covers.Count == Covers.Count &&
+               other.Description == Description &&
+               other.Icon == Icon &&
+               other.MaxNumberOfInsured == MaxNumberOfInsured &&
+               other.Name == Name &&
+               other.Image == Image &&
+               other.Questions.Count == Questions.Count;
+    }
+
+    /// <inheritdoc />
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(
+            Code,
+            Name,
+            Image,
+            Description,
+            MaxNumberOfInsured,
+            Questions,
+            Covers,
+            Icon);
+    }
+}

@@ -29,8 +29,12 @@ public class Startup
     {
         services.AddAuthorization();
         services.AddSwaggerDocs();
+        services.AddAutoMapper(typeof(Program).Assembly);
+
         services.AddServices();
+
         services.AddDbContext<IAppContext, AppContext>();
+
         services.AddControllers();
     }
 

@@ -3,6 +3,4 @@ using ProductService.Api.Queries.DTOs;
 
 namespace ProductService.Api.Queries;
 
-public record FindAllProductsQuery : IRequest<IEnumerable<ProductDto>>
-{
-}
+public record GetProductByCodeQuery(string ProductCode) : IRequest<ProductDto>;

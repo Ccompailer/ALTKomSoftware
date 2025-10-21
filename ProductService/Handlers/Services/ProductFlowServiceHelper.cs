@@ -3,7 +3,8 @@ using ProductService.Api.Commands.DTOs;
 using ProductService.Api.Queries.DTOs;
 using ProductService.Api.Queries.DTOs.Questions;
 using ProductService.Persistence.Entities;
-using CoverDto = ProductService.Api.Commands.DTOs.CoverDto;
+using CommandCoverDto = ProductService.Api.Commands.DTOs.CoverDto;
+using CoverDto = ProductService.Api.Queries.DTOs.CoverDto;
 
 namespace ProductService.Handlers.Services;
 
@@ -36,10 +37,10 @@ public static class ProductFlowServiceHelper
     /// <summary>
     /// Маппер для создания покрытий продукта
     /// </summary>
-    /// <param name="coverInfos">Данные для создания покрытия</param>
+    /// <param name="commandCoverInfos">Данные для создания покрытия</param>
     /// <returns>Новые покрытия</returns>
-    public static IReadOnlyCollection<Cover> ToCoversMapper(this ICollection<CoverDto> coverInfos)
-        => coverInfos.Select(cd =>
+    public static IReadOnlyCollection<Cover> ToCoversMapper(this ICollection<CommandCoverDto> commandCoverInfos)
+        => commandCoverInfos.Select(cd =>
             new Cover(
                 cd.Code,
                 cd.Name,
@@ -80,4 +81,48 @@ public static class ProductFlowServiceHelper
                 .Select(ci => new Choice(ci.Code, ci.Label))
                 .ToList();
     }
+
+    // /// <summary>
+    // /// 
+    // /// </summary>
+    // /// <param name="product"></param>
+    // /// <returns></returns>
+    // public static ProductDto ToProductDto(this Product product)
+    // {
+    //     return new ProductDto(
+    //         product.Code,
+    //         product.Name,
+    //         product.Image,
+    //         product.Description,
+    //         product.MaxNumberOfInsured,
+    //         product.ProductIcon,
+    //         ToQuestionDtos(product.QuestionsReadOnly),
+    //         product.CoversReadOnly);
+    //
+    //     static List<AbstractQuestionDto> ToQuestionDtos(IReadOnlyList<Question> questions)
+    //     {
+    //         return questions.Select<Question, AbstractQuestionDto>(q =>
+    //             q switch
+    //             {
+    //                 NumericQuestion => new NumericQuestionDto(q.Code, q.Index, q.Text),
+    //                 DateQuestion => new DateQuestionDto(q.Code, q.Index, q.Text),
+    //                 ChoiceQuestion => new ChoiceQuestionDto(q.Code, q.Index, q.Text, new List<ChoiceDto>())
+    //             }).ToList();
+    //     }
+    // }
+
+    /// <summary>
+    /// Метод для создания пустого продуктового ДТО
+    /// </summary>
+    /// <returns>Пукстой объект ДТО</returns>
+    public static ProductDto CreateDefaultProductDto()
+        => new ProductDto(
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            default(int),
+            string.Empty,
+            new List<AbstractQuestionDto>(),
+            new List<CoverDto>());
 }

@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ProductService.Api.Commands;
-using ProductService.Api.Commands.Results;
+using ProductService.Api.Queries;
+using ProductService.Api.Queries.DTOs;
+using ProductService.Handlers.Services;
 
 namespace ProductService.Controllers.v1;
 
@@ -18,22 +20,34 @@ public class ProductServiceController(IMediator mediator)
     /// <summary>
     /// Получение всех продуктов
     /// </summary>
-    /// <returns>Не воз</returns>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <returns>Возвращает все продукты</returns>
     [HttpGet("/all")]
-    public async Task GetAll()
+    [ProducesResponseType(typeof(IReadOnlyCollection<ProductDto>), StatusCodes.Status200OK)]
+    public async Task<IResult> GetAll(CancellationToken cancellationToken)
     {
-        // Todo
+        var allProducts = await _mediator.Send(new GetAllProductsQuery(), cancellationToken);
+
+        return Results.Ok(allProducts);
     }
 
     /// <summary>
     /// Получение продукта по коду
     /// </summary>
     /// <param name="code">Код продукта</param>
+    /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Не воз</returns>
     [HttpGet("{code}")]
-    public async Task GetByCode(string code)
+    [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IResult> GetByCode(string code, CancellationToken cancellationToken)
     {
-        // Todo
+        var result = await _mediator.Send(
+            new GetProductByCodeQuery(code), cancellationToken);
+
+        return result.Equals(ProductFlowServiceHelper.CreateDefaultProductDto())
+            ? Results.NotFound(result)
+            : Results.Ok(result);
     }
 
     /// <summary>
@@ -43,10 +57,15 @@ public class ProductServiceController(IMediator mediator)
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Активированный продукт</returns>
     [HttpPatch("/activate")]
-    public async Task<ActivateProductResult> Activate(
+    [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
+    public async Task<IResult> Activate(
         [FromQuery] ActivateProductCommand request,
         CancellationToken cancellationToken)
-        => await _mediator.Send(request, cancellationToken);
+    {
+        var result = await _mediator.Send(request, cancellationToken);
+
+        return Results.Ok(result);
+    }
 
     /// <summary>
     /// Создание draft-продукта
@@ -55,18 +74,28 @@ public class ProductServiceController(IMediator mediator)
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Идентификатор нового продукта</returns>
     [HttpPost]
-    public async Task<CreateDraftProductResult> CreateDraft(
+    [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
+    public async Task<IResult> CreateDraft(
         [FromBody] CreateDraftProductCommand request,
         CancellationToken cancellationToken)
-        => await _mediator.Send(request, cancellationToken);
+    {
+        var result = await _mediator.Send(request, cancellationToken);
+
+        return Results.Ok(result);
+    }
 
     /// <summary>
-    /// Получение продукта по коду
+    /// Снятие продукта с производства.
     /// </summary>
-    /// <returns>Не воз</returns>
-    [HttpPatch("/discontinue")]
-    public async Task Discontinue()
+    /// <param name="productId">Идентификатор продукта</param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <returns>HTTP 200</returns>
+    [HttpPatch("/discontinue/{productId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IResult> Discontinue(Guid productId, CancellationToken cancellationToken)
     {
-        // Todo
+        var result = await _mediator.Send(new DiscontinueProductCommand(productId), cancellationToken);
+
+        return Results.Ok(result);
     }
 }

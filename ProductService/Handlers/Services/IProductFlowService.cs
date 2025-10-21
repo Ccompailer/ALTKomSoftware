@@ -1,5 +1,6 @@
 ﻿using ProductService.Api.Commands.DTOs;
 using ProductService.Api.Commands.Results;
+using ProductService.Api.Queries.DTOs;
 using ProductService.Persistence.Entities;
 
 namespace ProductService.Handlers.Services;
@@ -24,4 +25,12 @@ public interface IProductFlowService
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Созданный продукт</returns>
     Task<CreateDraftProductResult> CreateDraftProductAsync(ProductDraftDto productInfo, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Получение продукта по коду
+    /// </summary>
+    /// <param name="code">Код продукта</param>
+    /// <param name="ct">Токен отмены</param>
+    /// <returns>Объект продукта</returns>
+    Task<ProductDto> GetProductByCodeAsync(string code, CancellationToken ct);
 }
