@@ -113,3 +113,6 @@ dotnet_diagnostic.SA1649.severity = error
 # SA1651: Do not use placeholder text in documentation
 # Запрещает использование заполнителей типа "TODO: Document this" в XML-комментариях.
 dotnet_diagnostic.SA1651.severity = error
+
+# Пробел после круглой скобки
+dotnet_diagnostic.SA1009.severity = none

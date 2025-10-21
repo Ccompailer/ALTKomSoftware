@@ -13,8 +13,7 @@ namespace ProductService.Handlers.QueryHandlers;
 /// <param name="flowService">Сервис бизнес-логики ProductService</param>
 public class GetProductByCodeQueryHandler(
     IAppContext appContext,
-    IProductFlowService flowService
-    ) : IRequestHandler<GetProductByCodeQuery, ProductDto>
+    IProductFlowService flowService) : IRequestHandler<GetProductByCodeQuery, ProductDto>
 {
     private readonly IAppContext _appContext = appContext ?? throw new ArgumentNullException(nameof(appContext));
     private readonly IProductFlowService _flowService = flowService ?? throw new ArgumentNullException(nameof(flowService));
